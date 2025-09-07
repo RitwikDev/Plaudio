@@ -9,7 +9,13 @@ import SwiftUI
 
 struct Player: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Rectangle()
+            .fill(.indigo)
+            .frame(maxWidth: .infinity, maxHeight: 200)
+            .opacity(0.3)
+            .overlay {
+                Text("Player")
+            }
     }
 }
 

@@ -8,8 +8,24 @@
 import SwiftUI
 
 struct Queue: View {
+    private let recordCenterColours: [Color] = [
+        .yellow,
+        .red,
+        .green,
+        .blue,
+        .white,
+    ]
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack(spacing: -70) {
+            ForEach(0..<10) { _ in
+                Record(centerColour: self.recordCenterColours.randomElement() ?? .yellow)
+                    .rotation3DEffect(
+                        Angle.degrees(45),
+                        axis: (x: 0, y: 1, z: 0)
+                    )
+            }
+        }
     }
 }
 

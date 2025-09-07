@@ -8,8 +8,14 @@
 import SwiftUI
 
 struct Ring: View {
+    var colour: Color = .black
+    var lineWidth: CGFloat = 1
+    public private(set) var radius: CGFloat = 100
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Circle()
+            .strokeBorder(self.colour, lineWidth: self.lineWidth)
+            .frame(width: self.radius)
     }
 }
 

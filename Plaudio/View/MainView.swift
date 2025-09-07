@@ -9,19 +9,31 @@ import SwiftUI
 
 struct MainView: View {
     @Environment(\.theme) var theme
-    
+
     var body: some View {
-        ZStack(alignment: .bottom) {
-            LinearGradient(
-                colors: [
-                    self.theme.primaryColour,
-                    .black,
-                ],
-                startPoint: .bottom,
-                endPoint: .top
-            )
+        GeometryReader { geometryProxy in
+            let bodyHeight = geometryProxy.frame(in: .global).height
+            let bodyWidth = geometryProxy.frame(in: .global).width
             
-            CoverFlow()
+            ZStack(alignment: .top) {
+                LinearGradient(
+                    colors: [
+                        self.theme.primaryColour,
+                        .black,
+                    ],
+                    startPoint: .bottom,
+                    endPoint: .top
+                )
+                
+                VStack {
+                    Queue()
+                    Player()
+                }
+                .padding(.bottom, 0)
+                .overlay {
+                    CoverFlow()
+                }
+            }
         }
     }
 }
