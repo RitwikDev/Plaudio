@@ -18,7 +18,7 @@ struct Cover: View {
                 .padding()
                 .foregroundStyle(.white)
                 .background(CoverBackground())
-                .frame(width: Cover.size, height: Cover.size)
+                .frame(width: Cover.size * 1, height: Cover.size)
         }
     }
 }

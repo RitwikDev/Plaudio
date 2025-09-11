@@ -10,10 +10,12 @@ import SwiftUI
 struct RecordWithTransition: View {
     @State var recordOffset: CGSize = .zero
     
+    public var id: Int = 0
     private let recordPeekOffsetY: CGFloat = 90
     
     var body: some View {
         Record()
+            .id(self.id)
             .offset(self.recordOffset)
             .gesture(
                 DragGesture()
@@ -40,10 +42,8 @@ struct RecordWithTransition: View {
         let newHeight = Maths.clamp(value: value.translation.height, minimum: 0, maximum: value.translation.height);
         let newSize: CGSize = CGSize(width: newWidth, height: newHeight);
         
-        if value.location.y >= 300 {
-            print("Queue ", UUID())
-        }
-        
+        print(value.location.y)
+
         withAnimation(.spring) {
             self.recordOffset = newSize
         }

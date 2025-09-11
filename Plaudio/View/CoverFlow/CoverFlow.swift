@@ -8,27 +8,24 @@
 import SwiftUI
 
 struct CoverFlow: View {
-    private let coverSpacing: CGFloat = -15
-
+    private let topMargin: CGFloat = 32
+    
     var body: some View {
-        GeometryReader { bodyGeometryProxy in
-            let bodyWidth = bodyGeometryProxy.size.width
-
+        GeometryReader { geometryProxy in
+            let viewWidth = geometryProxy.frame(in: .local).width
+            let viewHeight = geometryProxy.frame(in: .local).height
+            
             ScrollView(.horizontal, showsIndicators: false) {
-                LazyHStack() {
+                LazyHStack {
                     ForEach(0..<100) { index in
-                        ZStack {
-                            RecordWithTransition()
-                            CoverWithTransition(id: index)
-                        }
+                        CoverWithTransition(id: index)
                     }
                 }
-                .padding(.horizontal, (bodyWidth - Cover.size) / 2)
+                .padding(.horizontal, (viewWidth - Cover.size) / 2)
                 .scrollTargetLayout()
-                .offset(y: -250)
             }
             .scrollTargetBehavior(.viewAligned)
-            .frame(maxHeight: .infinity)
+            .contentMargins(.bottom, viewHeight - (Cover.size + self.topMargin))
         }
     }
 }

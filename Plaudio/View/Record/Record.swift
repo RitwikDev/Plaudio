@@ -19,7 +19,7 @@ struct Record: View {
             Ring(lineWidth: 0.5, radius: 55)
             Ring(colour: self.centerColour, lineWidth: 15, radius: 40)
         }
-        .shadow(color: .black, radius: 30, x: 0, y: -30)
+        .shadow(color: .black, radius: 30, x: 0, y: 30)
     }
 }
 

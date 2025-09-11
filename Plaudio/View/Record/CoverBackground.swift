@@ -11,19 +11,19 @@ struct CoverBackground: View {
     @Environment(\.theme) var theme: Theme
     
     var body: some View {
-        RoundedRectangle(cornerRadius: 10)
+        Rectangle()
             .fill(
                 LinearGradient(
                     colors: [
                         self.theme.primaryColour,
-                        self.theme.primaryColour.adjust(brightness: -0.7)
+                        self.theme.primaryColour.adjust(brightness: -0.5)
                     ],
-                    startPoint: .bottom,
-                    endPoint: .top
+                    startPoint: .top,
+                    endPoint: .bottom
                 )
             )
             .frame(width: Cover.size, height: Cover.size)
-            .shadow(color: .black, radius: 50, x: 0, y: -10)
+            .shadow(color: .black, radius: 50, x: 0, y: 30)
     }
 }
 

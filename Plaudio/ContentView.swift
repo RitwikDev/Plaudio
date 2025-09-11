@@ -11,10 +11,26 @@ struct ContentView: View {
     @State private var selectedColour: Color = .red
 
     var body: some View {
-        VStack {
+        NavigationView {
             MainView()
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Text("Plaudio")
+                            .font(.custom("Remarcle", size: 21))
+                    }
+                    
+                    ToolbarItem(placement: .confirmationAction) {
+                        Button {
+                            print("Selecting folder")
+                        } label: {
+                            Label("Select folder", systemImage: "folder")
+                        }
+
+                    }
+                }
                 .environment(\.theme, Theme(primaryColour: selectedColour))
-                .ignoresSafeArea()
+                .ignoresSafeArea(.keyboard)
+                .preferredColorScheme(.dark)
         }
     }
 }

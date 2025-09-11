@@ -11,7 +11,6 @@ struct Player: View {
     var body: some View {
         Rectangle()
             .fill(.indigo)
-            .frame(maxWidth: .infinity, maxHeight: 200)
             .opacity(0.3)
             .overlay {
                 Text("Player")
