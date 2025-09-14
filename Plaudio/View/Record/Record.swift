@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct Record: View {
-    var centerColour: Color = .yellow
+    var centreColour: Color = .yellow
     let backgroundColour: Color = Color(red: 0.23, green: 0.23, blue: 0.23)
+    
+    public static let SIZE: CGFloat = 100
     
     var body: some View {
         ZStack {
@@ -17,12 +19,12 @@ struct Record: View {
             Ring(lineWidth: 0.5, radius: 80)
             Ring(lineWidth: 0.5, radius: 70)
             Ring(lineWidth: 0.5, radius: 55)
-            Ring(colour: self.centerColour, lineWidth: 15, radius: 40)
+            Ring(colour: self.centreColour, lineWidth: 15, radius: 40)
         }
         .shadow(color: .black, radius: 30, x: 0, y: 30)
     }
 }
 
 #Preview {
-    Record(centerColour: .blue)
+    Record(centreColour: .blue)
 }

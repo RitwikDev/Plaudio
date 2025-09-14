@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var selectedColour: Color = .red
+    @State private var selectedColour: Color = .cyan
 
     var body: some View {
         NavigationView {
@@ -28,7 +28,10 @@ struct ContentView: View {
 
                     }
                 }
-                .environment(\.theme, Theme(primaryColour: selectedColour))
+                .environment(
+                    \.theme,
+                     Theme(primaryColour: selectedColour)
+                )
                 .ignoresSafeArea(.keyboard)
                 .preferredColorScheme(.dark)
         }

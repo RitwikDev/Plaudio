@@ -8,19 +8,18 @@
 import SwiftUI
 
 struct CoverWithTransition: View {
-    var id: Int = 0
+    public var id: Int = 0
     
     var body: some View {
         ZStack() {
-            RecordWithTransition(id: self.id)
             Cover(title: "Plaudio \(self.id)")
         }
         .id(self.id)
         .scrollTransition() { content, phase in
             content
-                .scaleEffect(phase.isIdentity ? 1 : 0.2)
+                .scaleEffect(phase.isIdentity ? 1 : 0.8)
                 .rotation3DEffect(
-                    .degrees(phase.isIdentity ? 0 : min(-150 * phase.value, 180)),
+                    .degrees(phase.isIdentity ? 0 : min(-90 * phase.value, 90)),
                     axis: (x: 0, y: 1, z: 0)
                 )
         }

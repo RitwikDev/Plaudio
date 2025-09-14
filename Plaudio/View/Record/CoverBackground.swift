@@ -15,15 +15,14 @@ struct CoverBackground: View {
             .fill(
                 LinearGradient(
                     colors: [
-                        self.theme.primaryColour,
-                        self.theme.primaryColour.adjust(brightness: -0.5)
+                        self.theme.primaryColour.adjust(brightness: -0.2),
+                        self.theme.primaryColour.adjust(brightness: -0.7)
                     ],
                     startPoint: .top,
                     endPoint: .bottom
                 )
             )
-            .frame(width: Cover.size, height: Cover.size)
-            .shadow(color: .black, radius: 50, x: 0, y: 30)
+            .frame(width: Cover.SIZE, height: Cover.SIZE)
     }
 }
 
