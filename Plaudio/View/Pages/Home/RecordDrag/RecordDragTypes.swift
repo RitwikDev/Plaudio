@@ -10,18 +10,21 @@ import Foundation
 enum RecordOverlappingFeature {
     case None
     case Queue
-    case Player
+    case Turntable
+    case TrackInfo
 }
 
 class RecordDragRequest {
-    let recordPositionY: CGFloat
+    let recordPosition: CGPoint
     let queueRect: CGRect
-    let playerRect: CGRect
+    let turntableRect: CGRect
+    let trackInfoRect: CGRect
     
-    init(recordPositionY: CGFloat, queueRect: CGRect, playerRect: CGRect) {
-        self.recordPositionY = recordPositionY
+    init(recordPosition: CGPoint, queueRect: CGRect, turntableRect: CGRect, trackInfoRect: CGRect) {
+        self.recordPosition = recordPosition
         self.queueRect = queueRect
-        self.playerRect = playerRect
+        self.turntableRect = turntableRect
+        self.trackInfoRect = trackInfoRect
     }
 }
 

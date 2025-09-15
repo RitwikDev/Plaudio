@@ -11,7 +11,7 @@ struct SearchPage: View {
     @State private var searchText: String = ""
     @State private var showCancelButton: Bool = false
     @State private var shouldFocusSearch: Bool = false
-
+        
     var body: some View {
         VStack {
             SearchBar(searchText: self.$searchText, shouldFocusSearch: self.$shouldFocusSearch)

@@ -16,17 +16,19 @@ struct TrackInformationCard: View {
             .fill(.white)
             .opacity(0.1)
             .overlay(
-                VStack(alignment: .leading, spacing: 0) {
+                VStack(alignment: .leading) {
                     Text(self.title)
                         .foregroundStyle(.white)
-                        .font(.title3)
                         .padding()
                     
+                    Spacer()
                     
                     Text(self.artist)
                         .foregroundStyle(.white)
-                        .padding()
-                        .padding(.bottom, 20)
+                        .font(.caption)
+                        .padding(.horizontal)
+                        .padding(.bottom, 28)
+                        .padding(.top, 0)
                 }
             )
     }

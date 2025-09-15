@@ -18,6 +18,8 @@ struct MainView: View {
 
     @State private var tabSelection: Tabs = Tabs.Home
     @State private var backgroundGradientColours: [Color] = [.black]
+    
+    @Binding public var trackCollection: TrackCollection
 
     var body: some View {
         ZStack {
@@ -35,7 +37,7 @@ struct MainView: View {
                     }
                     .tag(Tabs.Search)
 
-                Homepage()
+                Homepage(trackCollection: self.$trackCollection)
                     .tabItem {
                         Label("Play", systemImage: "waveform")
                     }
@@ -65,5 +67,5 @@ struct MainView: View {
 }
 
 #Preview {
-    MainView()
+    MainView(trackCollection: .constant(.empty()))
 }

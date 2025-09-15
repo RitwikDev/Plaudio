@@ -10,6 +10,8 @@ import SwiftUI
 struct CoverBackground: View {
     @Environment(\.theme) var theme: Theme
     
+    public var size: CGFloat
+    
     var body: some View {
         Rectangle()
             .fill(
@@ -22,10 +24,10 @@ struct CoverBackground: View {
                     endPoint: .bottom
                 )
             )
-            .frame(width: Cover.SIZE, height: Cover.SIZE)
+            .frame(width: self.size, height: self.size)
     }
 }
 
 #Preview {
-    CoverBackground()
+    CoverBackground(size: 175)
 }

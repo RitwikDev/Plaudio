@@ -10,6 +10,9 @@ import SwiftUI
 struct CoverFlow: View {
     @Binding public var currentRecordId: Int
     @Binding public var scrollPhase: ScrollPhase
+    @Binding public var trackCollection: TrackCollection
+    
+    public var coverSize: CGFloat = 150
     
     var body: some View {
         VStack {
@@ -20,12 +23,12 @@ struct CoverFlow: View {
                     ScrollViewReader { scrollViewReaderProxy in
                         ScrollView(.horizontal, showsIndicators: false) {
                             LazyHStack {
-                                ForEach(0..<100) { index in
-                                    CoverWithTransition(id: index)
+                                ForEach(self.trackCollection.tracks) { track in
+                                    CoverWithTransition(track: track, size: self.coverSize)
                                 }
                                 .containerRelativeFrame(.vertical, alignment: .bottom)
                             }
-                            .padding(.horizontal, (viewWidth - Cover.SIZE) * 0.5)
+                            .padding(.horizontal, (viewWidth - self.coverSize) * 0.5)
                             .scrollTargetLayout()
                         }
                         .scrollTargetBehavior(.viewAligned)
@@ -43,5 +46,9 @@ struct CoverFlow: View {
 }
 
 #Preview {
-    CoverFlow(currentRecordId: .constant(0), scrollPhase: .constant(.idle))
+    CoverFlow(
+        currentRecordId: .constant(0),
+        scrollPhase: .constant(.idle),
+        trackCollection: .constant(.empty())
+    )
 }

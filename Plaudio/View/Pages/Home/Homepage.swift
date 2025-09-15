@@ -8,10 +8,15 @@
 import SwiftUI
 
 struct Homepage: View {
+    @Environment(\.deviceDimension) var deviceDimension: DeviceDimension
+    
+    @Binding public var trackCollection: TrackCollection
+    
     @State private var bodyRect: CGRect = .zero
     @State private var coverFlowRect: CGRect = .zero
     @State private var queueRect: CGRect = .zero
-    @State private var playerRect: CGRect = .zero
+    @State private var turntableRect: CGRect = .zero
+    @State private var trackInfoRect: CGRect = .zero
 
     @State private var recordOpacity: CGFloat = 1
     @State private var recordOffset: CGPoint = .zero
@@ -23,11 +28,17 @@ struct Homepage: View {
     @State private var queueSpacing: CGFloat = Queue.DEFAULT_SPACING
     @State private var queueAngle: CGFloat = Queue.DEFAULT_ANGLE
     @State private var queueOffsetX: CGFloat = 0
-
-    private let coverFlowFramePadding: CGFloat = 16
-    private let recordDragLimitX: CGFloat = 100
-
+    @State private var coverFlowFramePadding: CGFloat = 16
+    
     var body: some View {
+        if self.trackCollection.isEmpty() {
+            EmptyHome()
+        } else {
+            NonEmptyHomeView
+        }
+    }
+    
+    var NonEmptyHomeView: some View {
         VStack {
             GeometryReader { bodyGeometry in
                 VStack(spacing: 50) {
@@ -46,6 +57,18 @@ struct Homepage: View {
                 }
                 .onAppear {
                     self.bodyRect = bodyGeometry.frame(in: .global)
+                    
+                    switch self.deviceDimension.sizeType {
+                    case .Small:
+                        self.coverFlowFramePadding = 5
+                        break
+                    case .Medium:
+                        self.coverFlowFramePadding = 20
+                        break
+                    case .Large:
+                        self.coverFlowFramePadding = 24
+                        break
+                    }
                 }
             }
         }
@@ -55,13 +78,15 @@ struct Homepage: View {
         GeometryReader { coverFlowGeometry in
             CoverFlow(
                 currentRecordId: self.$currentRecordId,
-                scrollPhase: self.$scrollPhase
+                scrollPhase: self.$scrollPhase,
+                trackCollection: self.$trackCollection,
+                coverSize: CoverSizeCalculator.calculate(self.deviceDimension)
             )
             .onAppear {
                 self.coverFlowRect = coverFlowGeometry.frame(in: .global)
             }
         }
-        .frame(height: Cover.SIZE + self.coverFlowFramePadding)
+        .frame(height: CoverSizeCalculator.calculate(self.deviceDimension) + self.coverFlowFramePadding)
         .zIndex(2)
         .shadow(color: .black, radius: 30, x: 0, y: 15)
     }
@@ -78,12 +103,10 @@ struct Homepage: View {
             }
 
             GeometryReader { playerGeometry in
-                Player()
-                    .onAppear {
-                        self.playerRect = playerGeometry.frame(in: .global)
-                    }
+                Player(turnableRect: self.$turntableRect, trackInfoRect: self.$trackInfoRect)
             }
         }
+        .padding(.bottom, 50)
     }
 
     var RecordView: some View {
@@ -117,11 +140,7 @@ struct Homepage: View {
     private func handleRecordDragged(value: DragGesture.Value, hasEnded: Bool) {
         let normalisedValueX = (value.location.x / (self.bodyRect.width / 2)) - 1
 
-        let newX = Maths.clamp(
-            value: self.recordDragLimitX * normalisedValueX,
-            minimum: -self.recordDragLimitX,
-            maximum: self.recordDragLimitX
-        )
+        let newX = (self.bodyRect.width / 2) * normalisedValueX
         
         let adjustedNewY = value.location.y
         + (Record.SIZE / 2)
@@ -146,12 +165,13 @@ struct Homepage: View {
     private func handleRecordDraggedInGlobalCoordinate(value: DragGesture.Value, hasEnded: Bool) {
         let result = RecordDragHelper.getDragResult(
             request: RecordDragRequest(
-                recordPositionY: value.location.y,
+                recordPosition: value.location,
                 queueRect: self.queueRect,
-                playerRect: self.playerRect
+                turntableRect: self.turntableRect,
+                trackInfoRect: self.trackInfoRect
             )
         )
-        
+                
         withAnimation {
             if result.currentOverlappingFeature == .Queue {
                 let newSpacing = -30 * (1 - result.offsetFromCentre)
@@ -199,5 +219,5 @@ struct Homepage: View {
 }
 
 #Preview {
-    Homepage()
+    Homepage(trackCollection: .constant(.empty()))
 }

@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct CoverWithTransition: View {
-    public var id: Int = 0
+    public var track: Track
+    public var size: CGFloat = 150
     
     var body: some View {
         ZStack() {
-            Cover(title: "Plaudio \(self.id)")
+            Cover(size: self.size, title: self.track.title)
         }
-        .id(self.id)
+        .id(self.track.id)
         .scrollTransition() { content, phase in
             content
                 .scaleEffect(phase.isIdentity ? 1 : 0.8)
@@ -27,5 +28,5 @@ struct CoverWithTransition: View {
 }
 
 #Preview {
-    CoverWithTransition(id: 1)
+    CoverWithTransition(track: .empty())
 }
